@@ -94,11 +94,18 @@ public class RetryService {
           value = { ApiException.class },
           maxAttempts = MAX_ATTEMPTS,
           backoff = @Backoff(delay = DELAY, multiplier = MULTIPLIER))
-  public BatchCreateMediaItemsResponse batchCreateMediaItems(PhotosLibraryClient photosLibraryClient,
-                                                             List<NewMediaItem> newMediaItems) {
-    logger.info("batchCreateMediaItems with retry newMediaItems size: {}", newMediaItems.size());
-    return photosLibraryClient.batchCreateMediaItems(newMediaItems);
+public BatchCreateMediaItemsResponse batchCreateMediaItems(PhotosLibraryClient photosLibraryClient,
+                                                           List<NewMediaItem> newMediaItems) {
+  logger.info("batchCreateMediaItems with retry newMediaItems size: {}", newMediaItems.size());
+  try {
+    BatchCreateMediaItemsResponse response = photosLibraryClient.batchCreateMediaItems(newMediaItems);
+    logger.info("batchCreateMediaItems success, response size: {}", response.getNewMediaItemResultsList().size());
+    return response;
+  } catch (Exception e) {
+    logger.error("batchCreateMediaItems failed with exception type: {}, message: {}", e.getClass().getName(), e.getMessage());
+    throw e;
   }
+}
 
   @Retryable(
           value = { ApiException.class },

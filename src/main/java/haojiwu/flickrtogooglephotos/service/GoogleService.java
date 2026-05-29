@@ -95,7 +95,7 @@ public class GoogleService {
             JacksonFactory.getDefaultInstance(),
             clientId,
             clientSecret,
-            Arrays.asList("https://www.googleapis.com/auth/photoslibrary",
+            Arrays.asList("https://www.googleapis.com/auth/photoslibrary.appendonly",
                     "https://www.googleapis.com/auth/photoslibrary.edit.appcreateddata",
                     "https://www.googleapis.com/auth/userinfo.profile"))
             .setAccessType("offline")
