@@ -96,6 +96,7 @@ public class GoogleService {
             clientId,
             clientSecret,
             Arrays.asList("https://www.googleapis.com/auth/photoslibrary.appendonly",
+                    "https://www.googleapis.com/auth/photoslibrary.readonly.appcreateddata",
                     "https://www.googleapis.com/auth/photoslibrary.edit.appcreateddata",
                     "https://www.googleapis.com/auth/userinfo.profile"))
             .setAccessType("offline")
