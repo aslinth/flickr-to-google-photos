@@ -111,11 +111,18 @@ public BatchCreateMediaItemsResponse batchCreateMediaItems(PhotosLibraryClient p
           value = { ApiException.class },
           maxAttempts = MAX_ATTEMPTS,
           backoff = @Backoff(delay = DELAY, multiplier = MULTIPLIER))
-  public InternalPhotosLibraryClient.ListAlbumsPagedResponse listAlbums(PhotosLibraryClient photosLibraryClient,
-                                                                        boolean excludeNonAppCreatedData) {
-    logger.info("listAlbums with retry");
-    return photosLibraryClient.listAlbums(excludeNonAppCreatedData);
+public InternalPhotosLibraryClient.ListAlbumsPagedResponse listAlbums(PhotosLibraryClient photosLibraryClient,
+                                                                      boolean excludeNonAppCreatedData) {
+  logger.info("listAlbums with retry");
+  try {
+    InternalPhotosLibraryClient.ListAlbumsPagedResponse response = photosLibraryClient.listAlbums(excludeNonAppCreatedData);
+    logger.info("listAlbums success");
+    return response;
+  } catch (Exception e) {
+    logger.error("listAlbums failed with exception type: {}, message: {}", e.getClass().getName(), e.getMessage());
+    throw e;
   }
+}
 
   @Retryable(
           value = { ApiException.class },
